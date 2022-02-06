@@ -1,0 +1,44 @@
+if game.Players.LocalPlayer:IsInGroup(7323484) then 
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Gëëkër", "Sentinel")
+
+local AnarchyTab = Window:NewTab("Anarchy")
+local TournamentXTab = Window:NewTab("Tournamnet X")
+local MiscellaneousTab = Window:NewTab("Miscellaneous")
+local SettingsTab = Window:NewTab("Settings")
+
+
+local AnarchySection = AnarchyTab:NewSection("Anarchy Scripts")
+local TournamentXSection = TournamentXTab:NewSection("Tournament X Scripts")
+local MiscellaneousSection = MiscellaneousTab:NewSection("Miscellaneous Scripts")
+local SettingsSection = SettingsTab:NewSection("Settings")
+
+local Players = game:GetService('Players')
+local LocalPlayer = Players.LocalPlayer
+
+AnarchySection:NewButton("Automatic M9", "AHK Required; download - autohotkey.com", function()
+local Players = game:GetService('Players')
+local LocalPlayer = Players.LocalPlayer
+
+local EveryReset = function()
+    pcall(function()
+        repeat wait() until LocalPlayer.Character:FindFirstChild('M9') or LocalPlayer.Backpack:FindFirstChild('M9') and #LocalPlayer.Backpack:FindFirstChild('M9'):GetChildren() > 3
+        local M9 = LocalPlayer.Character:FindFirstChild('M9') or LocalPlayer.Backpack:FindFirstChild('M9')
+        if M9 then
+            M9.Name = 'M9 '
+        end
+        for i,v in pairs(getgc(true)) do 
+            if typeof(v) == "table" and rawget(v, 'ReloadTime') then 
+               rawset(v, 'FireRate', 0.05)
+            end
+        end
+    end)
+end
+
+EveryReset(); LocalPlayer.CharacterAdded:Connect(EveryReset)
+end)
+
+SettingsSection:NewKeybind("Interface Keybind", "KeybindInfo", Enum.KeyCode.F, function()
+	Library:ToggleUI()
+end)
+end
